@@ -1,6 +1,6 @@
 const campoBusca = document.getElementById("campo-busca"); 
 const botaoBusca = document.getElementById("botao-busca");
-const cardContainer = document.querySelector(".card-container");
+const cardContainer = document.querySelector("main"); // Alterado para selecionar a tag <main>
 let dados = [];
 
 async function carregarDados() {
@@ -26,6 +26,11 @@ async function iniciarBusca() {
     }
 
     const termoBusca = campoBusca.value.toLowerCase().trim();
+
+    if (termoBusca === "") {
+        renderizarCards(dados, ""); // Mostra todos os resultados se a busca estiver vazia
+        return; // Encerra a função aqui
+    }
     
     const dadosFiltrados = dados.filter(dado =>
         dado.nome.toLowerCase().includes(termoBusca) ||
@@ -46,8 +51,8 @@ function renderizarCards(dados, termoBusca) {
 
     if (dados.length === 0) {
         let mensagem = termoBusca 
-            ? `Nenhum pioneiro(a) encontrado para "${termoBusca}".` 
-            : "Aguardando o carregamento dos dados...";
+            ? `Nenhum resultado encontrado para "<strong>${termoBusca}</strong>".` 
+            : 'Digite um nome, tecnologia ou área para começar sua busca.';
             
         cardContainer.innerHTML = `<p class="no-results">${mensagem}</p>`;
         return;
@@ -55,14 +60,13 @@ function renderizarCards(dados, termoBusca) {
 
     for (let dado of dados) {
         let article = document.createElement("article");
-        article.classList.add("card");
         
         const tagsHTML = gerarTagsHTML(dado.tags);
         
         article.innerHTML = `
             <img src="${dado.imagem}" alt="Imagem de ${dado.nome}">
             <div class="card-content">
-                <h2>${dado.nome}</h2>
+                <h2>${dado.nome}</h2> 
                 <p>Período: ${dado.periodo}</p>
                 <p>${dado.descricao}</p>
                 ${tagsHTML} <a href="${dado.link}" target="_blank">Biografia Completa</a>
@@ -72,7 +76,7 @@ function renderizarCards(dados, termoBusca) {
     }
 }
 
-campoBusca.addEventListener("input", iniciarBusca);
+// campoBusca.addEventListener("input", iniciarBusca); // Removido para que a busca não seja acionada a cada digitação
 botaoBusca.addEventListener("click", iniciarBusca);
 campoBusca.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
@@ -80,4 +84,7 @@ campoBusca.addEventListener("keypress", (e) => {
     }
 });
 
-window.addEventListener('load', iniciarBusca);
+window.addEventListener('load', () => {
+    carregarDados(); // Apenas carrega os dados em segundo plano
+    renderizarCards([], ""); // Exibe a mensagem inicial
+});
