@@ -257,10 +257,6 @@ article a:hover {
     color: var(--tertiary-color); /* Usa uma cor mais suave */
 }
 
-.footer-author a {
-    color: var(--primary-color);
-}
-
 /* Efeito hover para os links do rodapé */
 .footer-links a:hover {
     color: var(--accent-color); /* Muda a cor para a cor de destaque */
@@ -343,4 +339,5 @@ article a:hover {
     button {
         margin-top: 1rem; /* Adiciona margem acima do botão */
     }
+
 }
