@@ -1,4 +1,4 @@
-# Projeto Base de Conhecimento - Pioneiros da Ciência da Computação
+# Projeto Base de Conhecimento - PioneerLog
 
 Olá, seja bem-vindo(a)! 👋
 
